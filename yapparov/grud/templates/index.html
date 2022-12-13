@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST" action="create">
+        {% csrf_token %}
+        <p>
+            <label>Ведите имя</label><br>
+            <input type="text" name="name" value="{{person.name}}">
+        </p>
+        <p>
+            <label>Ведите возраст</label><br>
+            <input type="text" name="age" value="{{person.age}}">
+        </p>
+        <input type="submit" value="Сохранить">
+    </form>
+    {% if person.count > 0 %}
+    <h2>Список пользователей</h2>
+    <table>
+        <thead><th>id</th><th>name</th><th>age</th><th></th></thead>
+        {% for people in person %}
+        <tr>
+            <td>{{ people.id }}</td>
+            <td>{{ people.name }}</td>
+            <td>{{ people.age }}</td>
+            <td><a href="edit/{{people.id}}">edit</a> | <a href="delete/{{people.id}}">delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</body>
+</html>
